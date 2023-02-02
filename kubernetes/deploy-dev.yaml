@@ -2,15 +2,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fe-boilerplate
+  name: fe-finance
   labels:
-    app: fe-boilerplate
-  namespace: fe-boilerplate
+    app: fe-finance
+  namespace: fe-finance
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fe-boilerplate
+      app: fe-finance
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,13 +19,13 @@ spec:
   template:
     metadata:
       labels:
-        app: fe-boilerplate
+        app: fe-finance
     spec:
       imagePullSecrets:
       - name: registry
       containers:
-      - name: fe-boilerplate
-        image: git.edenfarm.id:5050/project-version3/erp-services/module-boilerplate/dev:<VERSION>
+      - name: fe-finance
+        image: git.edenfarm.id:5050/project-version3/erp-dashboard/finance/dev:<VERSION>
         ports:
           - name: http-port
             containerPort: 8080
@@ -49,10 +49,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-fe-boilerplate
-  namespace: fe-boilerplate
+  name: svc-fe-finance
+  namespace: fe-finance
   labels:
-    app: fe-boilerplate
+    app: fe-finance
 spec:
   ports:
   - name: http
@@ -60,18 +60,18 @@ spec:
     port: 80
     targetPort: http-port
   selector:
-    app: fe-boilerplate
+    app: fe-finance
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-fe-boilerplate
-  namespace: fe-boilerplate
+  name: hpa-fe-finance
+  namespace: fe-finance
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: fe-boilerplate
+    name: fe-finance
   minReplicas: 1
   maxReplicas: 10
   metrics:
@@ -91,12 +91,12 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: fe-boilerplate
-  namespace: fe-boilerplate
+  name: fe-finance
+  namespace: fe-finance
 spec:
   dnsNames:
-    - fe-boilerplate.edenfarm.tech
-  secretName: fe-boilerplate-tls
+    - fe-finance.edenfarm.tech
+  secretName: fe-finance-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -104,23 +104,23 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: fe-boilerplate
+  namespace: fe-finance
   annotations:
     kubernetes.io/ingress.class: "nginx"
-  name: fe-boilerplate
+  name: fe-finance
 spec:
   tls:
   - hosts:
-    - fe-boilerplate.edenfarm.tech
-    secretName: fe-boilerplate-tls
+    - fe-finance.edenfarm.tech
+    secretName: fe-finance-tls
   rules:
-  - host: fe-boilerplate.edenfarm.tech
+  - host: fe-finance.edenfarm.tech
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: svc-fe-boilerplate
+            name: svc-fe-finance
             port:
               number: 80
