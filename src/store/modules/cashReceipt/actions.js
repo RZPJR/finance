@@ -5,7 +5,7 @@ const actions = {
         commit("setPreloadCashReceipt", true)
         commit("setCashReceipt", [])
         try {
-            let filter = state.sales_payment_list.filter
+            let filter = state.cash_receipt_list.filter
             let site = filter.site
             let region = filter.region
             let customer = filter.customer
