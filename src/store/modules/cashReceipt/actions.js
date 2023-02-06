@@ -1,9 +1,9 @@
 import http from "../../../services/http";
 
 const actions = {
-    fetchSalesPayment: async ({ state, commit }, payload) => {
-        commit("setPreloadSalesPayment", true)
-        commit("setSalesPayment", [])
+    fetchCashReceipt: async ({ state, commit }, payload) => {
+        commit("setPreloadCashReceipt", true)
+        commit("setCashReceipt", [])
         try {
             let filter = state.sales_payment_list.filter
             let site = filter.site
@@ -21,11 +21,11 @@ const actions = {
             //     date_filter: date_filter,
             //     status: status,
             // }});
-            // if(response.data.data !== null) commit("setSalesPayment", response.data.data)
-            commit("setPreloadSalesPayment", false)
+            // if(response.data.data !== null) commit("setCashReceipt", response.data.data)
+            commit("setPreloadCashReceipt", false)
         } catch (error) {
             console.log(error)
-            commit("setPreloadSalesPayment", false)
+            commit("setPreloadCashReceipt", false)
         }
     },
 }

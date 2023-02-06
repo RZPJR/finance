@@ -1,11 +1,11 @@
 export default [
     {
-        path: '/finance/sales-payment',
-        name: 'SalesPayment',
+        path: '/finance/cash-receipt',
+        name: 'CashReceipt',
         component: () => import("./Index.vue"),
         meta: {
             auth: true,
-            title: 'Sales Payment List'
+            title: 'Cash Receipt List'
         }
     },
 ]

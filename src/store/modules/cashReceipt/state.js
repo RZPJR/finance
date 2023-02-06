@@ -1,5 +1,5 @@
 const state = {
-    sales_payment_list: {
+    cash_receipt_list: {
         isLoading: false,
         data: [],
         filter:{

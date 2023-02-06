@@ -14,7 +14,7 @@
                                 outlined
                                 dense
                                 filled
-                                data-unq="salesPayment-input-search"
+                                data-unq="cashReceipt-input-search"
                             >
                             </v-text-field>
                         </template>
@@ -32,7 +32,7 @@
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
                         class="no-caps fs12"
-                        data-unq="salesPayment-button-filterExpandLess"
+                        data-unq="cashReceipt-button-filterExpandLess"
                     >
                         Hide
                         <v-icon right>mdi-chevron-up</v-icon>
@@ -43,7 +43,7 @@
                         @click="showFilter = !showFilter"
                         v-else
                         class="no-caps fs12"
-                        data-unq="salesPayment-button-filterExpandMore"
+                        data-unq="cashReceipt-button-filterExpandMore"
                     >
                         Show<v-icon right>mdi-chevron-down</v-icon>
                     </v-btn>
@@ -58,7 +58,7 @@
                         :label="'Region'"
                         :dense="true"
                         @selected="regionSelected"
-                        data-unq="salesPayment-select-region"
+                        data-unq="cashReceipt-select-region"
                     ></SelectArea>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -68,7 +68,7 @@
                         :dense="true"
                         @selected="siteSelected"
                         :label="'Site'"
-                        data-unq="salesPayment-select-site"
+                        data-unq="cashReceipt-select-site"
                     ></SelectWarehouse>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -77,7 +77,7 @@
                         @selected="customerSelected"
                         :label="'Customer'"
                         :dense="true"
-                        data-unq="salesPayment-select-customer"
+                        data-unq="cashReceipt-select-customer"
                     ></SelectMerchant>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -87,7 +87,7 @@
                         item-text="text"
                         item-value="text"
                         label="Date Type"
-                        data-unq="salesPayment-select-dateType"
+                        data-unq="cashReceipt-select-dateType"
                         dense
                         outlined
                     ></v-select>
@@ -128,7 +128,7 @@
                         <v-date-picker
                             range
                             v-model="filter.date_filter.date"
-                            data-unq="salesPayment-datePicker-dateFilter"
+                            data-unq="cashReceipt-datePicker-dateFilter"
                         >
                             <v-spacer></v-spacer>
                             <v-btn
@@ -146,7 +146,7 @@
                         item-text="text"
                         item-value="value"
                         label="Status"
-                        data-unq="salesPayment-select-status"
+                        data-unq="cashReceipt-select-status"
                         dense
                         outlined
                     ></v-select>
@@ -157,24 +157,24 @@
             <v-row>
                 <v-col class="right">
                     <v-btn
-                        name="create_bulk_payment"
+                        name="create_bulk_receipt"
                         depressed
                         color="#50ABA3"
                         class="no-caps bold mr-4"
                         @click="nextMethod()"
-                        data-unq="salesPayment-button-createActivePayment"
+                        data-unq="cashReceipt-button-createActiveReceipt"
                     >
-                        <span class="text-white">Create Active Payment</span>
+                        <span class="text-white">Create Active Receipt</span>
                     </v-btn>
                     <v-btn
-                        name="create_bulk_payment"
+                        name="create_bulk_receipt"
                         depressed
                         color="#50ABA3"
                         class="no-caps bold"
-                        @click="confirmPaymentDialog = true"
-                        data-unq="salesPayment-button-confirmPayment"
+                        @click="confirmReceiptDialog = true"
+                        data-unq="cashReceipt-button-confirmReceipt"
                     >
-                        <span class="text-white">Confirm Payment</span>
+                        <span class="text-white">Confirm Receipt</span>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -182,9 +182,9 @@
         <div class="box-body-table">
             <v-data-table
                 :mobile-breakpoint="0"
-                :headers="sales_payment.table_headers"
-                :items="sales_payment.data"
-                :loading="sales_payment.isLoading"
+                :headers="cash_receipt.table_headers"
+                :items="cash_receipt.data"
+                :loading="cash_receipt.isLoading"
                 :items-per-page="10"
             >
                 <template v-slot:item="props">
@@ -234,7 +234,7 @@
                             <span v-else>-</span>
                         </td>
                         <td>
-                            <span v-if="props.item.image_url" class="primary-color" @click="popupImage = true, selectImage(props.index)" data-unq="salesPayment-button-transferProof">Transfer Proof</span>
+                            <span v-if="props.item.image_url" class="primary-color" @click="popupImage = true, selectImage(props.index)" data-unq="cashReceipt-button-transferProof">Transfer Proof</span>
                             <span v-else>-</span>
                         </td>
                         <td>
@@ -279,7 +279,7 @@
                         <td>
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
-                                    <v-btn icon v-on="{ ...menu }" data-unq="salesPayment-button-actionButton">
+                                    <v-btn icon v-on="{ ...menu }" data-unq="cashReceipt-button-actionButton">
                                         <v-icon dark>mdi-dots-vertical</v-icon>
                                     </v-btn>
                                 </template>
@@ -288,7 +288,7 @@
                                         v-privilege="'sp_can_active'"
                                         v-if="props.item.status == 1"
                                         @click="cancelPaymentActive(props.item.id)"
-                                        data-unq="salesPayment-button-cancelActivePayment"
+                                        data-unq="cashReceipt-button-cancelActiveReceipt"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
@@ -298,7 +298,7 @@
                                         v-privilege="'sp_can'"
                                         v-if="props.item.status == 2 || props.item.status == 5"
                                         @click="cancelPayment(props.item.id)"
-                                        data-unq="salesPayment-button-cancelPayment"
+                                        data-unq="cashReceipt-button-cancelReceipt"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
@@ -309,7 +309,7 @@
                                     </div>
                                     <v-list-item 
                                         @click="seeHistory(props.item.id)"
-                                        data-unq="salesPayment-button-history"
+                                        data-unq="cashReceipt-button-history"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>See History</v-list-item-title>
@@ -321,11 +321,11 @@
                                     <v-list-item 
                                         v-if="(props.item.status == 1 || props.item.status == 5) && props.item.payment_method.name !== 'Cash'" 
                                         v-privilege="'sp_crt_active'"
-                                        @click="openPopupPaymentProof(props.index)"
-                                        data-unq="salesPayment-button-addPaymentProof"
+                                        @click="openPopupReceiptProof(props.index)"
+                                        data-unq="cashReceipt-button-addReceiptProof"
                                     >
                                         <v-list-item-content>
-                                            <v-list-item-title>Add Payment Proof</v-list-item-title>
+                                            <v-list-item-title>Add Receipt Proof</v-list-item-title>
                                         </v-list-item-content>
                                     </v-list-item>
                                     <div v-if="props.item.status == 1 || props.item.status == 5" v-privilege="'sp_crt_active'">
@@ -334,11 +334,11 @@
                                     <v-list-item 
                                         v-if="props.item.status == 1 || props.item.status == 5" 
                                         v-privilege="'sp_cnf'"
-                                        @click="confirmPayment(props.item)"
-                                        data-unq="salesPayment-button-confirmPayment"
+                                        @click="confirmReceipt(props.item)"
+                                        data-unq="cashReceipt-button-confirmReceipt"
                                     >
                                         <v-list-item-content>
-                                            <v-list-item-title>Confirm Payment</v-list-item-title>
+                                            <v-list-item-title>Confirm Receipt</v-list-item-title>
                                         </v-list-item-content>
                                     </v-list-item>
                                 </v-list>
@@ -351,7 +351,7 @@
                     :value="true"
                     color="error"
                     icon="warning"
-                    data-unq="salesPayment-error-paymentList"
+                    data-unq="cashReceipt-error-receiptList"
                 >
                     Your search for "{{ filter.search }}" found no results.
                 </v-alert>
@@ -365,43 +365,43 @@
     import { mapState, mapActions, mapMutations } from "vuex";
 
     export default {
-        name: 'SalesPayment',
+        name: 'CashReceipt',
         data() {
             return {
                 showFilter : false,
             }
         },
         mounted() {
-            this.$store.commit('setSalesPaymentDateFilter', {
+            this.$store.commit('setCashReceiptDateFilter', {
                 model: "",
                 input: new Date(Date.now() + 3600 * 1000 * 7).toISOString().substr(0, 10),
                 date: [new Date(Date.now() + 3600 * 1000 * 7).toISOString().substr(0, 10),],
             })
-            this.fetchSalesPayment()
+            this.fetchCashReceipt()
         },
         computed: {
             ...mapState({
-                sales_payment: state => state.salesPayment.sales_payment_list,
-                filter: state => state.salesPayment.sales_payment_list.filter,
-                status_options: state => state.salesPayment.sales_payment_list.status_options,
-                date_type_options: state => state.salesPayment.sales_payment_list.date_type_options,
+                cash_receipt: state => state.cashReceipt.cash_receipt_list,
+                filter: state => state.cashReceipt.cash_receipt_list.filter,
+                status_options: state => state.cashReceipt.cash_receipt_list.status_options,
+                date_type_options: state => state.cashReceipt.cash_receipt_list.date_type_options,
             }),
         },
         methods: { 
             ...mapActions([
-                'fetchSalesPayment'
+                'fetchCashReceipt'
             ]),
             ...mapMutations([
-                'setSalesPaymentRegionFilter',
-                'setSalesPaymentSiteFilter',
-                'setSalesPaymentCustomerFilter',
-                'setSalesPaymentDateFilter',
+                'setCashReceiptRegionFilter',
+                'setCashReceiptSiteFilter',
+                'setCashReceiptCustomerFilter',
+                'setCashReceiptDateFilter',
             ]),
             //For Filter Region
             regionSelected(val) {
                 this.filter.area = null;
                 if (val !== ''  && val !== undefined && val !== null) {
-                    this.$store.commit('setSalesPaymentRegionFilter', {
+                    this.$store.commit('setCashReceiptRegionFilter', {
                         ...this.filter,
                         region: val.id
                     })
@@ -411,7 +411,7 @@
             siteSelected(val) {
                 this.filter.site = null;
                 if (val !== ''  && val !== undefined && val !== null) {
-                    this.$store.commit('setSalesPaymentSiteFilter', {
+                    this.$store.commit('setCashReceiptSiteFilter', {
                         ...this.filter,
                         site: val.id
                     })
@@ -421,7 +421,7 @@
             customerSelected(val) {
                 this.filter.customer = null;
                 if (val !== ''  && val !== undefined && val !== null) {
-                    this.$store.commit('setSalesPaymentCustomerFilter', {
+                    this.$store.commit('setCashReceiptCustomerFilter', {
                         ...this.filter,
                         customer: val.id
                     })
@@ -432,7 +432,7 @@
             'filter.search': {
                 handler: function (val) {
                     if (val) {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
@@ -440,7 +440,7 @@
             'filter.region': {
                 handler: function (val) {
                     if (val) {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
@@ -448,7 +448,7 @@
             'filter.site': {
                 handler: function (val) {
                     if (val) {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
@@ -456,7 +456,7 @@
             'filter.customer': {
                 handler: function (val) {
                     if (val) {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
@@ -464,7 +464,7 @@
             'filter.date_type': {
                 handler: function (val) {
                     if (val) {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
@@ -472,7 +472,7 @@
             'filter.status': {
                 handler: function (val) {
                     if (val) {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
@@ -485,7 +485,7 @@
                             if (valid == true) {
                                 this.filter.date_filter.date[0] = this.$moment(val).format('YYYY-MM-DD')
                                 Vue.nextTick(() => {
-                                    this.fetchSalesPayment()
+                                    this.fetchCashReceipt()
                                 });
                             }
                         } else if (val.length == 24) {
@@ -505,12 +505,12 @@
                                         this.filter.date_filter.date.splice(1,1)
                                     }
                                 }else {
-                                    this.fetchSalesPayment()
+                                    this.fetchCashReceipt()
                                 }
                             }
                         }
                     } else {
-                        this.fetchSalesPayment()
+                        this.fetchCashReceipt()
                     }
                 },
                 deep: true
