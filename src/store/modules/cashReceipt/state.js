@@ -17,13 +17,13 @@ const state = {
         },
         table_headers: [
             {
-                text: "Sales Payment Code / Sales Invoice Code",
+                text: "Cash Receipt Code / Sales Invoice Code",
                 width: "20%",
                 class: "grey--text text--darken-4",
                 sortable: false
             },
             {
-                text: "Payment Date",
+                text: "Receipt Date",
                 width: "10%",
                 class: "grey--text text--darken-4",
                 sortable: false
@@ -92,7 +92,7 @@ const state = {
         ],
         date_type_options: [
             {
-                text: "Payment Date",
+                text: "Receipt Date",
                 value: 1,
             },
             {
