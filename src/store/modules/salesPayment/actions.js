@@ -28,14 +28,6 @@ const actions = {
             commit("setPreloadSalesPayment", false)
         }
     },
-
-    fetchUpdateSalesPaymentDetail: async ({ commit, dispatch}, payload) => {
-        try {
-            // const response = await http.get("/app/"+payload.id)
-        } catch (error) {
-            console.log(error)
-        }
-    }
 }
 
 export default actions;
