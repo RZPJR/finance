@@ -14,7 +14,10 @@ import '@mdi/font/css/materialdesignicons.css'
 import { 
   SelectGlossary,
   DetailRowNew,
-  ConfirmationDialogNew
+  ConfirmationDialogNew,
+  SelectArea,
+  SelectWarehouse,
+  SelectMerchant,
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 Vue.use(require('vue-moment'));
@@ -42,6 +45,9 @@ Vue.mixin({
     SelectGlossary,
     DetailRowNew,
     ConfirmationDialogNew,
+    SelectArea,
+    SelectWarehouse,
+    SelectMerchant,
   },
   data: function() {
     return {
