@@ -9,20 +9,8 @@ const mutations = {
         return state;
     },
 
-    setCashReceiptRegionFilter: function(state, payload){
-        state.cash_receipt_list.filter.region = payload;
-        return state;
-    },
-    setCashReceiptSiteFilter: function(state, payload){
-        state.cash_receipt_list.filter.site = payload;
-        return state;
-    },
-    setCashReceiptCustomerFilter: function(state, payload){
-        state.cash_receipt_list.filter.customer = payload;
-        return state;
-    },
-    setCashReceiptDateFilter: function(state, payload){
-        state.cash_receipt_list.filter.date_filter = payload;
+    setCashReceiptFilter: function(state, payload){
+        state.cash_receipt_list.filter = payload;
         return state;
     },
 };

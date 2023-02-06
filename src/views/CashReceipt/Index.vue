@@ -392,16 +392,13 @@
                 'fetchCashReceipt'
             ]),
             ...mapMutations([
-                'setCashReceiptRegionFilter',
-                'setCashReceiptSiteFilter',
-                'setCashReceiptCustomerFilter',
-                'setCashReceiptDateFilter',
+                'setCashReceiptFilter',
             ]),
             //For Filter Region
             regionSelected(val) {
                 this.filter.area = null;
                 if (val !== ''  && val !== undefined && val !== null) {
-                    this.$store.commit('setCashReceiptRegionFilter', {
+                    this.$store.commit('setCashReceiptFilter', {
                         ...this.filter,
                         region: val.id
                     })
@@ -411,7 +408,7 @@
             siteSelected(val) {
                 this.filter.site = null;
                 if (val !== ''  && val !== undefined && val !== null) {
-                    this.$store.commit('setCashReceiptSiteFilter', {
+                    this.$store.commit('setCashReceiptFilter', {
                         ...this.filter,
                         site: val.id
                     })
@@ -421,7 +418,7 @@
             customerSelected(val) {
                 this.filter.customer = null;
                 if (val !== ''  && val !== undefined && val !== null) {
-                    this.$store.commit('setCashReceiptCustomerFilter', {
+                    this.$store.commit('setCashReceiptFilter', {
                         ...this.filter,
                         customer: val.id
                     })
