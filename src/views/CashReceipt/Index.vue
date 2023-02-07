@@ -190,14 +190,14 @@
                 <template v-slot:item="props">
                     <tr class="h48">
                         <td>
-                            <span v-if="props.item.code" :data-unq="`cashReceipt-value-cashReceiptCode-${props.item.id}`">{{props.item.code}}</span>
+                            <span v-if="props.item.code" :data-unq="`cashReceipt-value-cashReceiptCode-${props.index}`">{{props.item.code}}</span>
                             <span v-else>-</span>
                             /
-                            <span v-if="props.item.sales_invoice.code" :data-unq="`cashReceipt-value-salesInvoiceCode-${props.item.id}`">{{ props.item.sales_invoice.code }}</span>
+                            <span v-if="props.item.sales_invoice.code" :data-unq="`cashReceipt-value-salesInvoiceCode-${props.index}`">{{ props.item.sales_invoice.code }}</span>
                             <span v-else>-</span>
                         </td>
                         <td>
-                            <span v-if="props.item.recognition_date" :data-unq="`cashReceipt-value-recoignitionDate-${props.item.id}`">
+                            <span v-if="props.item.recognition_date" :data-unq="`cashReceipt-value-recoignitionDate-${props.index}`">
                                 {{formatDate(props.item.recognition_date)}}
                             </span>
                             <span class="text-black60" v-else>-</span>
@@ -205,25 +205,25 @@
                             <span
                                 class="text-black60"
                                 v-if="props.item.received_date"
-                                :data-unq="`cashReceipt-value-receivedDate-${props.item.id}`"
+                                :data-unq="`cashReceipt-value-receivedDate-${props.index}`"
                             >
                                 {{ formatDate(props.item.received_date) }}
                             </span>
                             <span class="text-black60" v-else>-</span>
                         </td>
-                        <td :data-unq="`cashReceipt-value-deliveryDate-${props.item.id}`">{{ formatDate(props.item.sales_invoice.sales_order.delivery_date)}}</td>
+                        <td :data-unq="`cashReceipt-value-deliveryDate-${props.index}`">{{ formatDate(props.item.sales_invoice.sales_order.delivery_date)}}</td>
                         <td>
                             <span
                                 v-if="props.item.sales_invoice.sales_order.branch.merchant.customer_group == 1"
-                                :data-unq="`cashReceipt-value-customerName-${props.item.id}`"
+                                :data-unq="`cashReceipt-value-customerName-${props.index}`"
                             >
                                 {{ props.item.sales_invoice.sales_order.branch.merchant.name }}
                                 <br />
-                                <label class="text-black60" :data-unq="`cashReceipt-value-addressName-${props.item.id}`">
+                                <label class="text-black60" :data-unq="`cashReceipt-value-addressName-${props.index}`">
                                     {{ props.item.sales_invoice.sales_order.branch.name }}
                                 </label>
                             </span>
-                            <span v-else :data-unq="`cashReceipt-value-customerName-${props.item.id}`">{{ props.item.sales_invoice.sales_order.branch.merchant.name }}</span>
+                            <span v-else :data-unq="`cashReceipt-value-customerName-${props.index}`">{{ props.item.sales_invoice.sales_order.branch.merchant.name }}</span>
                         </td>
                         <td>
                             <span>{{ props.item.sales_invoice.sales_order.area.name }}</span>
@@ -235,16 +235,16 @@
                             </span>
                             <span v-else>-</span>
                         </td>
-                        <td :data-unq="`cashReceipt-value-transferProof-${props.item.id}`">
+                        <td :data-unq="`cashReceipt-value-transferProof-${props.index}`">
                             <span v-if="props.item.image_url" class="primary-color" @click="popupImage = true, selectImage(props.index)" data-unq="cashReceipt-button-transferProof">Transfer Proof</span>
                             <span v-else>-</span>
                         </td>
                         <td>
-                            <v-row :data-unq="`cashReceipt-value-amount-${props.item.id}`">Rp{{ formatPrice(props.item.amount) }}</v-row>
-                            <v-row :data-unq="`cashReceipt-value-paymentMethod-${props.item.id}`">{{ props.item.payment_method.name }}</v-row>
+                            <v-row :data-unq="`cashReceipt-value-amount-${props.index}`">Rp{{ formatPrice(props.item.amount) }}</v-row>
+                            <v-row :data-unq="`cashReceipt-value-paymentMethod-${props.index}`">{{ props.item.payment_method.name }}</v-row>
                         </td>
-                        <td :data-unq="`cashReceipt-value-paidOff-${props.item.id}`">{{ props.item.paid_off === 1 ? 'Paid Off' : '-' }}</td>
-                        <td :data-unq="`cashReceipt-value-status-${props.item.id}`">
+                        <td :data-unq="`cashReceipt-value-paidOff-${props.index}`">{{ props.item.paid_off === 1 ? 'Paid Off' : '-' }}</td>
+                        <td :data-unq="`cashReceipt-value-status-${props.index}`">
                             <div v-if="props.item.status == 1">
                                 <v-chip
                                     :color="statusMaster('active')"
@@ -281,7 +281,7 @@
                         <td>
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
-                                    <v-btn icon v-on="{ ...menu }" :data-unq="`cashReceipt-button-actionButton-${props.item.id}`">
+                                    <v-btn icon v-on="{ ...menu }" :data-unq="`cashReceipt-button-actionButton-${props.index}`">
                                         <v-icon dark>mdi-dots-vertical</v-icon>
                                     </v-btn>
                                 </template>
@@ -289,8 +289,8 @@
                                     <v-list-item
                                         v-privilege="'sp_can_active'"
                                         v-if="props.item.status == 1"
-                                        @click="cancelPaymentActive(props.item.id)"
-                                        :data-unq="`cashReceipt-button-cancelActiveReceipt-${props.item.id}`"
+                                        @click="cancelPaymentActive(props.index)"
+                                        :data-unq="`cashReceipt-button-cancelActiveReceipt-${props.index}`"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
@@ -299,8 +299,8 @@
                                     <v-list-item
                                         v-privilege="'sp_can'"
                                         v-if="props.item.status == 2 || props.item.status == 5"
-                                        @click="cancelPayment(props.item.id)"
-                                        :data-unq="`cashReceipt-button-cancelReceipt-${props.item.id}`"
+                                        @click="cancelPayment(props.index)"
+                                        :data-unq="`cashReceipt-button-cancelReceipt-${props.index}`"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
@@ -310,8 +310,8 @@
                                         <hr /> 
                                     </div>
                                     <v-list-item 
-                                        @click="seeHistory(props.item.id)"
-                                        :data-unq="`cashReceipt-button-history-${props.item.id}`"
+                                        @click="seeHistory(props.index)"
+                                        :data-unq="`cashReceipt-button-history-${props.index}`"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>See History</v-list-item-title>
@@ -324,7 +324,7 @@
                                         v-if="(props.item.status == 1 || props.item.status == 5) && props.item.payment_method.name !== 'Cash'" 
                                         v-privilege="'sp_crt_active'"
                                         @click="openPopupReceiptProof(props.index)"
-                                        :data-unq="`cashReceipt-button-addReceiptProof-${props.item.id}`"
+                                        :data-unq="`cashReceipt-button-addReceiptProof-${props.index}`"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>Add Receipt Proof</v-list-item-title>
@@ -337,7 +337,7 @@
                                         v-if="props.item.status == 1 || props.item.status == 5" 
                                         v-privilege="'sp_cnf'"
                                         @click="confirmReceipt(props.item)"
-                                        :data-unq="`cashReceipt-button-confirmReceipt-${props.item.id}`"
+                                        :data-unq="`cashReceipt-button-confirmReceipt-${props.index}`"
                                     >
                                         <v-list-item-content>
                                             <v-list-item-title>Confirm Receipt</v-list-item-title>
@@ -353,7 +353,7 @@
                     :value="true"
                     color="error"
                     icon="warning"
-                    :data-unq="`cashReceipt-error-receiptList-${props.item.id}`"
+                    :data-unq="`cashReceipt-error-receiptList`"
                 >
                     Your search for "{{ filter.search }}" found no results.
                 </v-alert>
