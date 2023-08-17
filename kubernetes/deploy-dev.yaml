@@ -40,7 +40,7 @@ spec:
       - name: registry
       containers:
       - name: fe-finance
-        image: git.edenfarm.id:5050/project-version3/erp-dashboard/finance/eks-dev:<VERSION>
+        image: git.edenfarm.id:5050/project-version3/erp-dashboard/finance/dev:<VERSION>
         ports:
         - name: http-port
           containerPort: 8080
@@ -133,8 +133,8 @@ metadata:
   namespace: fe-finance
 spec:
   dnsNames:
-  - fe-finance.edenfarm.tech
-  secretName: fe-finance-tls
+  - dev-fe-finance.edenfarm.tech
+  secretName: dev-fe-finance-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -144,15 +144,16 @@ kind: Ingress
 metadata:
   namespace: fe-finance
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
   name: fe-finance
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
-    - fe-finance.edenfarm.tech
-    secretName: fe-finance-tls
+    - dev-fe-finance.edenfarm.tech
+    secretName: dev-fe-finance-tls
   rules:
-  - host: fe-finance.edenfarm.tech
+  - host: dev-fe-finance.edenfarm.tech
     http:
       paths:
       - path: /
