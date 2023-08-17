@@ -133,8 +133,8 @@ metadata:
   namespace: fe-finance
 spec:
   dnsNames:
-  - dev-fe-finance.edenfarm.tech
-  secretName: dev-fe-finance-tls
+  - fe-finance.edenfarm.tech
+  secretName: fe-finance-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -150,10 +150,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - dev-fe-finance.edenfarm.tech
-    secretName: dev-fe-finance-tls
+    - fe-finance.edenfarm.tech
+    secretName: fe-finance-tls
   rules:
-  - host: dev-fe-finance.edenfarm.tech
+  - host: fe-finance.edenfarm.tech
     http:
       paths:
       - path: /
